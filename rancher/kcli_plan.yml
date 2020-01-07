@@ -1,0 +1,21 @@
+parameters:
+ template: CentOS-7-x86_64-GenericCloud.qcow2
+ memory: 8192
+ network: default
+ pool: default
+
+rancher:
+ template: {{ template }}
+ memory: {{ memory }}
+ numcpus: 2
+ nets:
+  - {{ network }}
+ disks:
+  - size: 40
+ pool: {{ pool }}
+ reservedns: true
+ cmds: 
+  - yum -y install docker
+  - systemctl start docker
+  - systemctl enable docker
+  - docker run -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher

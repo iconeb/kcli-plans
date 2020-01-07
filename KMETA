@@ -1,0 +1,4 @@
+- name: rancher
+  file: rancher/kcli_plan.yml
+  description: Deploy Rancher
+  numvms: 1
