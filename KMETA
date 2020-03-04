@@ -2,3 +2,11 @@
   file: rancher/kcli_plan.yml
   description: Deploy Rancher
   numvms: 1
+- name: kafka
+  file: kafka/kcli_plan.yml
+  description: Deploy Kafka
+  numvms: 3
+- name: galera
+  file: galera/kcli_plan.yml
+  description: Deploy Galera
+  numvms: 3
