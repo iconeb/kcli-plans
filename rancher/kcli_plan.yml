@@ -3,6 +3,8 @@ parameters:
  memory: 8192
  network: default
  pool: default
+ rancher_version: latest
+ admin_password: rancher
 
 rancher:
  template: {{ template }}
@@ -14,8 +16,5 @@ rancher:
   - size: 40
  pool: {{ pool }}
  reservedns: true
- cmds: 
-  - yum -y install docker
-  - systemctl start docker
-  - systemctl enable docker
-  - docker run -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher
+ scripts:
+  - rancher.sh 
