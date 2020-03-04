@@ -1,0 +1,17 @@
+[Unit]
+Description=Cruise Control (Kafka)
+Documentation=http://zookeeper.apache.org
+Requires=network.target remote-fs.target
+After=network.target remote-fs.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/cruise-control
+User=kafka
+Group=kafka
+Environment=JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk
+ExecStart=/opt/cruise-control/kafka-cruise-control-start.sh ./config/cruisecontrol.properties
+ExecStop=/opt/cruise-control/kafka-cruise-control-stop.sh
+
+[Install]
+WantedBy=multi-user.target

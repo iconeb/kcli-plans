@@ -1,0 +1,45 @@
+parameters:
+ template: CentOS-7-x86_64-GenericCloud.qcow2
+ memory: 1536
+ network: default
+ pool: default
+ domain: default
+ kafka_version: 2.4.0
+ cruise_version: 0.3.4
+ nodes: 2 
+
+{% for node in range(0, nodes) %}
+k0{{ node + 1 }}:
+ template: {{ template }}
+ memory: {{ memory }}
+ numcpus: 2
+ nets:
+  - {{ network }}
+ disks:
+  - size: 10
+ pool: {{ pool }}
+ reservedns: true
+ scripts:
+  - kafka.sh 
+ files:
+  - path: /etc/systemd/system/kafka-zookeeper.service
+    origin: kafka-zookeper.service
+  - path: /etc/systemd/system/kafka.service
+    origin: kafka.service
+{% endfor %}
+
+kcontrol:
+ template: {{ template }}
+ memory: {{ memory }}
+ numcpus: 2
+ nets:
+  - {{ network }}
+ disks:
+  - size: 10
+ pool: {{ pool }}
+ reservedns: true
+ scripts:
+  - kafkacontrol.sh 
+ files:
+  - path: /etc/systemd/system/cruise-control.service
+    origin: cruise-control.service
