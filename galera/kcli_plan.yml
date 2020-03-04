@@ -1,0 +1,23 @@
+parameters:
+ template: CentOS-7-x86_64-GenericCloud.qcow2
+ memory: 1536
+ network: default
+ pool: default
+ domain: default
+ kafka_version: 2.4.0
+ nodes: 3 
+
+{% for node in range(0, nodes) %}
+g0{{ node + 1 }}:
+ template: {{ template }}
+ memory: {{ memory }}
+ numcpus: 2
+ nets:
+  - {{ network }}
+ disks:
+  - size: 10
+ pool: {{ pool }}
+ reservedns: true
+ scripts:
+  - galera.sh 
+{% endfor %}
